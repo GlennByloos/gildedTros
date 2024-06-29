@@ -14,6 +14,11 @@ namespace GildedTros.App
         {
             for (var i = 0; i < Items.Count; i++)
             {
+                if (Items[i].Name != "B-DAWG Keychain")
+                {
+                    Items[i].SellIn = Items[i].SellIn - 1;
+                }
+
                 if (Items[i].Name != "Good Wine" 
                     && Items[i].Name != "Backstage passes for Re:factor"
                     && Items[i].Name != "Backstage passes for HAXX")
@@ -21,6 +26,14 @@ namespace GildedTros.App
                     if (Items[i].Quality > 0)
                     {
                         if (Items[i].Name != "B-DAWG Keychain")
+                        {
+                            Items[i].Quality = Items[i].Quality - 1;
+                        }
+
+                        if ((Items[i].Name == "Duplicate Code"
+                        || Items[i].Name == "Long Methods"
+                        || Items[i].Name == "Ugly Variable Names")
+                        && Items[i].Quality > 0) //Faulty, can go negative.
                         {
                             Items[i].Quality = Items[i].Quality - 1;
                         }
@@ -54,11 +67,6 @@ namespace GildedTros.App
                     }
                 }
 
-                if (Items[i].Name != "B-DAWG Keychain")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
                 if (Items[i].SellIn < 0)
                 {
                     if (Items[i].Name != "Good Wine")
@@ -69,6 +77,14 @@ namespace GildedTros.App
                             if (Items[i].Quality > 0)
                             {
                                 if (Items[i].Name != "B-DAWG Keychain")
+                                {
+                                    Items[i].Quality = Items[i].Quality - 1;
+                                }
+
+                                if ((Items[i].Name == "Duplicate Code"
+                                || Items[i].Name == "Long Methods"
+                                || Items[i].Name == "Ugly Variable Names")
+                                && Items[i].Quality > 0)
                                 {
                                     Items[i].Quality = Items[i].Quality - 1;
                                 }

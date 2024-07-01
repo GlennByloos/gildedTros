@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GildedTros.App
 {
@@ -15,6 +16,33 @@ namespace GildedTros.App
             for (var i = 0; i < Items.Count; i++)
             {
                 if (Items[i].Name != "B-DAWG Keychain")
+                {
+                    Items[i].SellIn -= 1;
+                }
+
+                switch (Items[i].Name)
+                {
+                    case "Ring of Cleansening Code"         // Common Items
+                    or "Elixir of the SOLID":
+                        UpdateQualityCommonItems(i);
+                        break;
+                    case "Good Wine":                       // Wine Items
+                        UpdateQualityWineItems(i);
+                        break;
+                    case "B-DAWG Keychain":                 // Legendary Items
+                        break;
+                    case "Backstage passes for Re:factor"   // BackStage Pass Items
+                    or "Backstage passes for HAXX":
+                        UpdateQualityBackStagePassItems(i);
+                        break;
+                    case "Duplicate Code"                   // Smelly Items
+                    or "Long Methods"
+                    or "Ugly Variable Names":
+                        UpdateQualitySmellyItems(i);
+                        break;
+                }
+
+                /*if (Items[i].Name != "B-DAWG Keychain")
                 {
                     Items[i].SellIn = Items[i].SellIn - 1;
                 }
@@ -102,7 +130,62 @@ namespace GildedTros.App
                             Items[i].Quality = Items[i].Quality + 1;
                         }
                     }
-                }
+                }*/
+            }
+        }
+
+        public void UpdateQualityCommonItems(int i)
+        {
+            if (Items[i].SellIn < 0)
+            {
+                Items[i].Quality = Math.Max(0, Items[i].Quality - 2);
+            }
+            else
+            {
+                Items[i].Quality = Math.Max(0, Items[i].Quality - 1);
+            }
+        }
+        public void UpdateQualityWineItems(int i)
+        {
+            if (Items[i].SellIn < 0)
+            {
+                Items[i].Quality = Math.Min(50, Items[i].Quality + 2);
+            }
+            else
+            {
+                Items[i].Quality = Math.Min(50, Items[i].Quality + 1);
+            }
+        }
+        public void UpdateQualityBackStagePassItems(int i)
+        {
+            if (Items[i].SellIn > 10)
+            {
+                Items[i].Quality = Math.Min(50, Items[i].Quality + 1);
+            }
+            else if (Items[i].SellIn <= 10
+            && Items[i].SellIn > 5)
+            {
+                Items[i].Quality = Math.Min(50, Items[i].Quality + 2);
+            }
+            else if (Items[i].SellIn <= 5
+            && Items[i].SellIn >= 0)
+            {
+                Items[i].Quality = Math.Min(50, Items[i].Quality + 3);
+            }
+            else
+            {
+                Items[i].Quality -= Items[i].Quality;
+            }
+        }
+        public void UpdateQualitySmellyItems(int i)
+        {
+            if (Items[i].SellIn < 0)
+            {
+                Items[i].Quality = Math.Max(0, Items[i].Quality - 4);
+            }
+            else
+            {
+                Items[i].Quality = Math.Max(0, Items[i].Quality - 2);
             }
         }
     }

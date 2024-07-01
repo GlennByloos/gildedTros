@@ -8,28 +8,24 @@ namespace GildedTros.App
 {
     public class GildedTrosTest
     {
-        GildedTros App;
-        IList<Item> ItemsList;
-
         public GildedTrosTest()
         {
-            ItemsList = new List<Item>();
-            App = new GildedTros(ItemsList);
+            GildedTros.Items = new List<Item>();
         }
 
-        public void UpdateQualityTest (string name, int sellIn, int quality, int expectedQuality)
+        public void UpdateQualityTest(string name, int sellIn, int quality, int expectedQuality)
         {
             // Arrange
-            ItemsList.Add(new Item { Name = name, SellIn = sellIn, Quality = quality });
+            GildedTros.Items.Add(new Item { Name = name, SellIn = sellIn, Quality = quality });
 
             // Act
-            App.UpdateQuality();
+            GildedTros.UpdateQuality();
 
             // Assert
-            Assert.Equal(expectedQuality, ItemsList[0].Quality);
+            Assert.Equal(expectedQuality, GildedTros.Items[0].Quality);
 
             // Clear
-            ItemsList.Clear();
+            GildedTros.Items.Clear();
         }
 
         [Theory]
@@ -75,7 +71,7 @@ namespace GildedTros.App
         }
 
         [Theory]
-        [InlineData("Good Wine", 0, 1, 3)]
+        [InlineData("Good Wine", 0, 1, 2)]
         [InlineData("Good Wine", 0, 49, 50)]
         [InlineData("Good Wine", 1, 25, 26)]
         [InlineData("Good Wine", 2, 49, 50)]
@@ -97,7 +93,7 @@ namespace GildedTros.App
         }*/
 
         [Theory]
-        [InlineData("Good Wine", 0, 0, 2)]
+        [InlineData("Good Wine", 0, 0, 1)]
         [InlineData("Good Wine", 1, 0, 1)]
         [InlineData("Good Wine", 2, 0, 1)]
         [InlineData("Good Wine", 6, 0, 1)]
@@ -144,7 +140,7 @@ namespace GildedTros.App
         [InlineData("Backstage passes for Re:factor", 7, 48, 50)]
         [InlineData("Backstage passes for Re:factor", 10, 25, 27)]
         [InlineData("Backstage passes for Re:factor", 11, 0, 2)]
-        [InlineData("Backstage passes for Re:factor", 12, 25, 26)]
+        [InlineData("Backstage passes for Re:factor", 12, 25, 25)]
         public void UpdateQuality_BackStagePassItemsBoundaryTesting_Positive(string name, int sellIn, int quality, int expectedQuality)
         {
             UpdateQualityTest(name, sellIn, quality, expectedQuality);

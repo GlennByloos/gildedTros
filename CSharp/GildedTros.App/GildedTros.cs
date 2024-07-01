@@ -5,13 +5,9 @@ namespace GildedTros.App
 {
     public class GildedTros
     {
-        IList<Item> Items;
-        public GildedTros(IList<Item> Items)
-        {
-            this.Items = Items;
-        }
+        public static IList<Item> Items;
 
-        public void UpdateQuality()
+        public static void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
             {
@@ -134,7 +130,7 @@ namespace GildedTros.App
             }
         }
 
-        public void UpdateQualityCommonItems(int i)
+        private static void UpdateQualityCommonItems(int i)
         {
             if (Items[i].SellIn < 0)
             {
@@ -145,39 +141,28 @@ namespace GildedTros.App
                 Items[i].Quality = Math.Max(0, Items[i].Quality - 1);
             }
         }
-        public void UpdateQualityWineItems(int i)
+        private static void UpdateQualityWineItems(int i)
+        {
+            Items[i].Quality = Math.Min(50, Items[i].Quality + 1);
+        }
+        private static void UpdateQualityBackStagePassItems(int i)
         {
             if (Items[i].SellIn < 0)
             {
-                Items[i].Quality = Math.Min(50, Items[i].Quality + 2);
-            }
-            else
-            {
-                Items[i].Quality = Math.Min(50, Items[i].Quality + 1);
-            }
-        }
-        public void UpdateQualityBackStagePassItems(int i)
-        {
-            if (Items[i].SellIn > 10)
-            {
-                Items[i].Quality = Math.Min(50, Items[i].Quality + 1);
-            }
-            else if (Items[i].SellIn <= 10
-            && Items[i].SellIn > 5)
-            {
-                Items[i].Quality = Math.Min(50, Items[i].Quality + 2);
+                Items[i].Quality -= Items[i].Quality;
             }
             else if (Items[i].SellIn <= 5
             && Items[i].SellIn >= 0)
             {
                 Items[i].Quality = Math.Min(50, Items[i].Quality + 3);
             }
-            else
+            else if (Items[i].SellIn <= 10
+            && Items[i].SellIn > 5)
             {
-                Items[i].Quality -= Items[i].Quality;
+                Items[i].Quality = Math.Min(50, Items[i].Quality + 2);
             }
         }
-        public void UpdateQualitySmellyItems(int i)
+        private static void UpdateQualitySmellyItems(int i)
         {
             if (Items[i].SellIn < 0)
             {
